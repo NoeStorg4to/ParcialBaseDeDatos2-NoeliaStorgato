@@ -1,0 +1,756 @@
+---------- 1 ----------
+----- SCRIPT EN JS:
+
+db.cafeteria.insertMany([
+    {
+        _id: 1,
+        tipo: "espresso",
+        ingredientes: ['chocolate', 'canela'],
+        peso: 250,
+        intensidad: 'alta',
+        precio: [
+            {tipo: 'efectivo', precio: 480},
+            {tipo: 'tarjeta', precio: 520}
+        ],
+        contieneLeche: false,
+        tostadora: {
+            localidad: 'Buenos Aires',
+            nombre: 'Tostaduria Central',
+            cuit: '20-12345678-9'
+        }
+    },
+    {
+        _id: 2,
+        tipo: "filtrado",
+        ingredientes: ['vainilla', 'caramelo'],
+        peso: 300,
+        intensidad: 'media',
+        precio: [
+            {tipo: 'efectivo', precio: 650},
+            {tipo: 'tarjeta', precio: 700}
+        ],
+        contieneLeche: true,
+        tostadora: {
+            localidad: 'Cordoba',
+            nombre: 'Café del Valle',
+            cuit: '20-87654321-0'
+        }
+    },
+    {
+        _id: 3,
+        tipo: "cold brew",
+        ingredientes: ['chocolate', 'vainilla'],
+        peso: 500,
+        intensidad: 'baja',
+        precio: [
+            {tipo: 'efectivo', precio: 800},
+            {tipo: 'tarjeta', precio: 850}
+        ],
+        contieneLeche: false,
+        tostadora: {
+            localidad: 'Mendoza',
+            nombre: 'Montaña Coffee',
+            cuit: '20-11223344-5'
+        }
+    },
+    {
+        _id: 4,
+        tipo: "descafeinado",
+        ingredientes: ['caramelo'],
+        peso: 200,
+        intensidad: 'baja',
+        precio: [
+            {tipo: 'efectivo', precio: 420},
+            {tipo: 'tarjeta', precio: 460}
+        ],
+        contieneLeche: true,
+        tostadora: {
+            localidad: 'Rosario',
+            nombre: 'Granos Dorados',
+            cuit: '20-55667788-1'
+        }
+    },
+    {
+        _id: 5,
+        tipo: "espresso",
+        ingredientes: ['vainilla', 'canela', 'chocolate'],
+        peso: 250,
+        intensidad: 'alta',
+        precio: [
+            {tipo: 'efectivo', precio: 550},
+            {tipo: 'tarjeta', precio: 600}
+        ],
+        contieneLeche: false,
+        tostadora: {
+            localidad: 'San Justo',
+            nombre: 'Artesanos del Café',
+            cuit: '20-99887766-2'
+        }
+    },
+    {
+        _id: 6,
+        tipo: "filtrado",
+        ingredientes: ['almendra', 'miel'],
+        peso: 350,
+        intensidad: 'media',
+        precio: [
+            {tipo: 'efectivo', precio: 720},
+            {tipo: 'tarjeta', precio: 770}
+        ],
+        contieneLeche: true,
+        tostadora: {
+            localidad: 'Bariloche',
+            nombre: 'Patagonia Brew',
+            cuit: '20-44556677-3'
+        }
+    },
+    {
+        _id: 7,
+        tipo: "cold brew",
+        ingredientes: ['caramelo', 'chocolate'],
+        peso: 250,
+        intensidad: 'alta',
+        precio: [
+            {tipo: 'efectivo', precio: 480},
+            {tipo: 'tarjeta', precio: 520}
+        ],
+        contieneLeche: false,
+        tostadora: {
+            localidad: 'Salta',
+            nombre: 'Altura Coffee',
+            cuit: '20-33445566-4'
+        }
+    },
+    {
+        _id: 8,
+        tipo: "capuccino",
+        ingredientes: ['canela', 'vainilla'],
+        peso: 300,
+        intensidad: 'media',
+        precio: [
+            {tipo: 'efectivo', precio: 200},
+            {tipo: 'tarjeta', precio: 300}
+        ],
+        contieneLeche: true,
+        tostadora: {
+            localidad: 'Mar del Plata',
+            nombre: 'Costa Café',
+            cuit: '20-22334455-6'
+        }
+    },
+    {
+        _id: 9,
+        tipo: "latte",
+        ingredientes: ['vainilla', 'caramelo', 'canela'],
+        peso: 260,
+        intensidad: 'baja',
+        precio: [
+            {tipo: 'efectivo', precio: 620},
+            {tipo: 'tarjeta', precio: 670}
+        ],
+        contieneLeche: true,
+        tostadora: {
+            localidad: 'Tucumán',
+            nombre: 'Norte Tostado',
+            cuit: '20-66778899-7'
+        }
+    },
+    {
+        _id: 10,
+        tipo: "descafeinado",
+        ingredientes: ['chocolate', 'almendra'],
+        peso: 260,
+        intensidad: 'alta',
+        precio: [
+            {tipo: 'efectivo', precio: 490},
+            {tipo: 'tarjeta', precio: 540}
+        ],
+        contieneLeche: false,
+        tostadora: {
+            localidad: 'Neuquén',
+            nombre: 'Café Patagonico',
+            cuit: '20-11998877-8'
+        }
+    },
+
+])
+
+------------
+---CREACION DE LA BD Y LA CARGA
+
+test> use cafeteria
+switched to db cafeteria
+cafeteria> load('cafeteria.js')
+true
+---------- 2 ----------
+
+cafeteria> db.cafeteria.find({ingredientes: {$in:['chocolate']}}, {_id: 0, tipo: 1})
+[
+  { tipo: 'espresso' },
+  { tipo: 'cold brew' },
+  { tipo: 'espresso' },
+  { tipo: 'cold brew' },
+  { tipo: 'descafeinado' }
+]
+
+---------- 3 ----------
+
+cafeteria> db.cafeteria.find({tipo: 'cold brew', ingredientes: 'vainilla'})        
+[
+  {        
+    _id: 3,
+    tipo: 'cold brew',
+    ingredientes: [ 'chocolate', 'vainilla' ],
+    peso: 500,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 800 },
+      { tipo: 'tarjeta', precio: 850 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Mendoza',
+      nombre: 'Montaña Coffee',
+      cuit: '20-11223344-5'
+    }
+  }
+]
+
+---------- 4 ----------
+
+cafeteria> db.cafeteria.find({intensidad: 'media'})
+[  
+  {
+    _id: 2,
+    tipo: 'filtrado',
+    ingredientes: [ 'vainilla', 'caramelo' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 650 },
+      { tipo: 'tarjeta', precio: 700 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Cordoba',
+      nombre: 'Café del Valle',
+      cuit: '20-87654321-0'
+    }
+  },
+  {
+    _id: 6,
+    tipo: 'filtrado',
+    ingredientes: [ 'almendra', 'miel' ],
+    peso: 350,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 720 },
+      { tipo: 'tarjeta', precio: 770 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Bariloche',
+      nombre: 'Patagonia Brew',
+      cuit: '20-44556677-3'
+    }
+  },
+  {
+    _id: 8,
+    tipo: 'capuccino',
+    ingredientes: [ 'canela', 'vainilla' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 200 },
+      { tipo: 'tarjeta', precio: 300 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Mar del Plata',
+      nombre: 'Costa Café',
+      cuit: '20-22334455-6'
+    }
+  }
+]
+cafeteria> db.cafeteria.find({intensidad: 'media'}, {_id: 0, tipo: 1})
+[ { tipo: 'filtrado' }, { tipo: 'filtrado' }, { tipo: 'capuccino' } ]
+
+
+---------- 5 ----------
+
+cafeteria> db.cafeteria.find({peso: {$gte: 200, $lte: 260}}, {_id: 0, tipo: 1, peso: 1, intensidad: 1})
+[
+  { tipo: 'espresso', peso: 250, intensidad: 'alta' },
+  { tipo: 'descafeinado', peso: 200, intensidad: 'baja' },
+  { tipo: 'espresso', peso: 250, intensidad: 'alta' },
+  { tipo: 'cold brew', peso: 250, intensidad: 'alta' },
+  { tipo: 'latte', peso: 260, intensidad: 'baja' },
+  { tipo: 'descafeinado', peso: 260, intensidad: 'alta' }
+]
+
+---------- 6 ----------
+
+cafeteria> db.cafeteria.find({'tostadora.localidad': {$regex: /san/i}}).sort({peso: -1})
+[
+  {
+    _id: 5,
+    tipo: 'espresso',
+    ingredientes: [ 'vainilla', 'canela', 'chocolate' ],
+    peso: 250,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 550 },
+      { tipo: 'tarjeta', precio: 600 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'San Justo',
+      nombre: 'Artesanos del Café',
+      cuit: '20-99887766-2'
+    }
+  }
+]
+
+---------- 7 ----------
+
+cafeteria> db.cafeteria.aggregate([{$group: {_id: '$tipo', pesoTotal: {$sum: '$peso'}}}])
+
+[
+  { _id: 'espresso', pesoTotal: 500 },
+  { _id: 'descafeinado', pesoTotal: 460 },
+  { _id: 'latte', pesoTotal: 260 },
+  { _id: 'capuccino', pesoTotal: 300 },
+  { _id: 'filtrado', pesoTotal: 650 },
+  { _id: 'cold brew', pesoTotal: 750 }
+]
+
+---------- 8 ----------
+
+cafeteria> db.cafeteria.updateMany({intensidad: 'alta'}, {$push: {ingredientes: 'wisky'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+cafeteria> db.cafeteria.find({intensidad: 'alta'})
+[  
+  {
+    _id: 1,
+    tipo: 'espresso',
+    ingredientes: [ 'chocolate', 'canela', 'wisky' ],
+    peso: 250,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Buenos Aires',
+      nombre: 'Tostaduria Central',
+      cuit: '20-12345678-9'
+    }
+  },
+  {
+    _id: 5,
+    tipo: 'espresso',
+    ingredientes: [ 'vainilla', 'canela', 'chocolate', 'wisky' ],
+    peso: 250,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 550 },
+      { tipo: 'tarjeta', precio: 600 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'San Justo',
+      nombre: 'Artesanos del Café',
+      cuit: '20-99887766-2'
+    }
+  },
+  {
+    _id: 7,
+    tipo: 'cold brew',
+    ingredientes: [ 'caramelo', 'chocolate', 'wisky' ],
+    peso: 250,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Salta',
+      nombre: 'Altura Coffee',
+      cuit: '20-33445566-4'
+    }
+  },
+  {
+    _id: 10,
+    tipo: 'descafeinado',
+    ingredientes: [ 'chocolate', 'almendra', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 490 },
+      { tipo: 'tarjeta', precio: 540 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Neuquén',
+      nombre: 'Café Patagonico',
+      cuit: '20-11998877-8'
+    }
+  }
+]
+
+---------- 9 ----------
+
+cafeteria> db.cafeteria.updateMany({peso: {$gte: 200, $lte: 260}}, {$inc: {peso: 10}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+
+
+----------
+
+cafeteria> db.cafeteria.find()
+[  
+  {
+    _id: 1,
+    tipo: 'espresso',
+    ingredientes: [ 'chocolate', 'canela', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Buenos Aires',
+      nombre: 'Tostaduria Central',
+      cuit: '20-12345678-9'
+    }
+  },
+  {
+    _id: 2,
+    tipo: 'filtrado',
+    ingredientes: [ 'vainilla', 'caramelo' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 650 },
+      { tipo: 'tarjeta', precio: 700 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Cordoba',
+      nombre: 'Café del Valle',
+      cuit: '20-87654321-0'
+    }
+  },
+  {
+    _id: 3,
+    tipo: 'cold brew',
+    ingredientes: [ 'chocolate', 'vainilla' ],
+    peso: 500,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 800 },
+      { tipo: 'tarjeta', precio: 850 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Mendoza',
+      nombre: 'Montaña Coffee',
+      cuit: '20-11223344-5'
+    }
+  },
+  {
+    _id: 4,
+    tipo: 'descafeinado',
+    ingredientes: [ 'caramelo' ],
+    peso: 210,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 420 },
+      { tipo: 'tarjeta', precio: 460 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Rosario',
+      nombre: 'Granos Dorados',
+      cuit: '20-55667788-1'
+    }
+  },
+  {
+    _id: 5,
+    tipo: 'espresso',
+    ingredientes: [ 'vainilla', 'canela', 'chocolate', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 550 },
+      { tipo: 'tarjeta', precio: 600 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'San Justo',
+      nombre: 'Artesanos del Café',
+      cuit: '20-99887766-2'
+    }
+  },
+  {
+    _id: 6,
+    tipo: 'filtrado',
+    ingredientes: [ 'almendra', 'miel' ],
+    peso: 350,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 720 },
+      { tipo: 'tarjeta', precio: 770 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Bariloche',
+      nombre: 'Patagonia Brew',
+      cuit: '20-44556677-3'
+    }
+  },
+  {
+    _id: 7,
+    tipo: 'cold brew',
+    ingredientes: [ 'caramelo', 'chocolate', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Salta',
+      nombre: 'Altura Coffee',
+      cuit: '20-33445566-4'
+    }
+  },
+  {
+    _id: 8,
+    tipo: 'capuccino',
+    ingredientes: [ 'canela', 'vainilla' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 200 },
+      { tipo: 'tarjeta', precio: 300 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Mar del Plata',
+      nombre: 'Costa Café',
+      cuit: '20-22334455-6'
+    }
+  },
+  {
+    _id: 9,
+    tipo: 'latte',
+    ingredientes: [ 'vainilla', 'caramelo', 'canela' ],
+    peso: 270,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 620 },
+      { tipo: 'tarjeta', precio: 670 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Tucumán',
+      nombre: 'Norte Tostado',
+      cuit: '20-66778899-7'
+    }
+  },
+  {
+    _id: 10,
+    tipo: 'descafeinado',
+    ingredientes: [ 'chocolate', 'almendra', 'wisky' ],
+    peso: 270,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 490 },
+      { tipo: 'tarjeta', precio: 540 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Neuquén',
+      nombre: 'Café Patagonico',
+      cuit: '20-11998877-8'
+    }
+  }
+]
+
+---------- 10 ----------
+
+cafeteria> db.cafeteria.deleteMany({peso: {$lte: 210}})
+{ acknowledged: true, deletedCount: 1 }
+cafeteria> db.cafeteria.find()
+[
+  {
+    _id: 1,
+    tipo: 'espresso',
+    ingredientes: [ 'chocolate', 'canela', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Buenos Aires',
+      nombre: 'Tostaduria Central',
+      cuit: '20-12345678-9'
+    }
+  },
+  {
+    _id: 2,
+    tipo: 'filtrado',
+    ingredientes: [ 'vainilla', 'caramelo' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 650 },
+      { tipo: 'tarjeta', precio: 700 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Cordoba',
+      nombre: 'Café del Valle',
+      cuit: '20-87654321-0'
+    }
+  },
+  {
+    _id: 3,
+    tipo: 'cold brew',
+    ingredientes: [ 'chocolate', 'vainilla' ],
+    peso: 500,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 800 },
+      { tipo: 'tarjeta', precio: 850 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Mendoza',
+      nombre: 'Montaña Coffee',
+      cuit: '20-11223344-5'
+    }
+  },
+  {
+    _id: 5,
+    tipo: 'espresso',
+    ingredientes: [ 'vainilla', 'canela', 'chocolate', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 550 },
+      { tipo: 'tarjeta', precio: 600 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'San Justo',
+      nombre: 'Artesanos del Café',
+      cuit: '20-99887766-2'
+    }
+  },
+  {
+    _id: 6,
+    tipo: 'filtrado',
+    ingredientes: [ 'almendra', 'miel' ],
+    peso: 350,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 720 },
+      { tipo: 'tarjeta', precio: 770 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Bariloche',
+      nombre: 'Patagonia Brew',
+      cuit: '20-44556677-3'
+    }
+  },
+  {
+    _id: 7,
+    tipo: 'cold brew',
+    ingredientes: [ 'caramelo', 'chocolate', 'wisky' ],
+    peso: 260,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 480 },
+      { tipo: 'tarjeta', precio: 520 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Salta',
+      nombre: 'Altura Coffee',
+      cuit: '20-33445566-4'
+    }
+  },
+  {
+    _id: 8,
+    tipo: 'capuccino',
+    ingredientes: [ 'canela', 'vainilla' ],
+    peso: 300,
+    intensidad: 'media',
+    precio: [
+      { tipo: 'efectivo', precio: 200 },
+      { tipo: 'tarjeta', precio: 300 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Mar del Plata',
+      nombre: 'Costa Café',
+      cuit: '20-22334455-6'
+    }
+  },
+  {
+    _id: 9,
+    tipo: 'latte',
+    ingredientes: [ 'vainilla', 'caramelo', 'canela' ],
+    peso: 270,
+    intensidad: 'baja',
+    precio: [
+      { tipo: 'efectivo', precio: 620 },
+      { tipo: 'tarjeta', precio: 670 }
+    ],
+    contieneLeche: true,
+    tostadora: {
+      localidad: 'Tucumán',
+      nombre: 'Norte Tostado',
+      cuit: '20-66778899-7'
+    }
+  },
+  {
+    _id: 10,
+    tipo: 'descafeinado',
+    ingredientes: [ 'chocolate', 'almendra', 'wisky' ],
+    peso: 270,
+    intensidad: 'alta',
+    precio: [
+      { tipo: 'efectivo', precio: 490 },
+      { tipo: 'tarjeta', precio: 540 }
+    ],
+    contieneLeche: false,
+    tostadora: {
+      localidad: 'Neuquén',
+      nombre: 'Café Patagonico',
+      cuit: '20-11998877-8'
+    }
+  }
+]
